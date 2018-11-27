@@ -1,0 +1,94 @@
+import java.util.*;
+import javax.swing.*;
+ 
+public class main {
+ 
+List<Integer> secretNumbers = new ArrayList<Integer>();
+ 
+  public static void main(String[] args) {
+ 
+String numOfLines;
+  int num = 0;
+  int _counter = 0;
+ 
+  numOfLines = JOptionPane.showInputDialog(null, "How many lines would you like to paly?");
+  num = Integer.valueOf(numOfLines);
+ 
+  while (num > 3) {
+  numOfLines = JOptionPane.showInputDialog(null,
+  "the max num of tries is 3 , how many lines would you like to paly?");
+  num = Integer.valueOf(numOfLines);
+ 
+    }
+ 
+    while (_counter <= num) {
+    _counter++;
+    processPlayerQuess(num);
+ 
+   if (_counter == num) {
+   // get the results of the game.
+ 
+   if (JOptionPane.showConfirmDialog(null, " do you want to continue playing?", "Info",
+   JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+   _counter = 0;
+        }
+ 
+      }
+ 
+    }
+ 
+  }
+ 
+    public static void processPlayerQuess(int numberOfAttemp) {
+ 
+      List<String> PlayerNumberList = new ArrayList<String>();
+      List<String> RandomNumberList = new ArrayList<String>();
+      Collection<String> PlayerNumberMatched = new HashSet<String>();
+      Collection<String> different = new HashSet<String>();
+      StringBuilder result = new StringBuilder();
+      int _counter = 1;
+      int amount = 0;
+ 
+      while (_counter <= numberOfAttemp) {
+ 
+      String playerNumbers = JOptionPane.showInputDialog(null,
+      "Please enter a number between 0 and 40 and use comma after each number please");
+ 
+      PlayerNumberList = Arrays.asList(playerNumbers.split(","));
+      System.out.println(PlayerNumberList);
+ 
+      RandomNumberList = getRandomNumberString();
+      System.out.println(RandomNumberList);
+ 
+     // compare the playerNumbers with gueesedNumber using collection
+       PlayerNumberMatched.addAll(PlayerNumberList);
+      different.addAll(PlayerNumberList);
+      different.addAll(RandomNumberList);
+ 
+      PlayerNumberMatched.retainAll(RandomNumberList);
+      amount = PlayerNumberMatched.size() * 100;
+ 
+      _counter++;
+      result.append("\nAttemp Number : " + String.valueOf(_counter) + "\nYour Numbers : " + PlayerNumberList + "\nThe Random Number is : " + RandomNumberList + "\nGuessed Numbers matched :"+ PlayerNumberMatched + "\nAmount won : € " + amount);
+ 
+    }
+ 
+    System.out.println(result.toString());
+  }
+ 
+      public static List<String> getRandomNumberString() {
+      // It will generate 6 digit random Number.
+      // from 0 to 40
+ 
+      List<String> secretNumberList = new ArrayList<String>();
+ 
+      for (int i = 0; i < 6; i++) {
+      secretNumberList.add(getRandomNumber());
+      }
+    return secretNumberList;
+  }
+ 
+  public static String getRandomNumber() {
+      Random rnd = new Random();
+      return String.valueOf(rnd.nextInt(40));
+      }
