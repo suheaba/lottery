@@ -17,22 +17,3 @@ The application should allow the user to play the loterry game as many times as 
 At the end of a game, the game should display the amount of numbers guessed correctly on each line played. Once a game has finished, the application asks the player if he/she would like to play another game. At the end of all the games, display a history of all games played. The history shows for each game the number of lines played and the number of lines won and the total winnings. All the history elements of the game should be coded using arrays.
 
 For example, the history at the end of a game could be: if the secret lottery numbers are 2, 4, 6, 7, 9, 12 and the user entered 1, 2, 3, 4, 5, 6 on their first line, and 2, 4, 6, 8, 9, 13 on their second line and 10, 20, 21, 22, 23, 24 on their third line, the program should output to the user: You guessed 3 numbers on line 1, 4 numbers on line 2 and 0 numbers on line 3.
-
-Application Development:
-To solve this problem, you shall form a group of 3 people.
-
-Project Submission:
-•	The project will be submitted to Moodle on week 12. Please check Moodle for deadline.
-•	You need to submit only once per project team.
-•	The project submission should include a project report outlining very clearly who has coded which part of the code. The report should include a description of the input, main processing and output (IPO).
-•	The code should be commented to explain what the code is doing. The code should follow good programming practice e.g. naming conventions, indentations.
-•	A test will take place following the submission of your group project. This test will include questions based on the topic of the project and submitted application. Please check Moodle for the exact date of the in-class test.
-
-Breakdown of marks
-Table 2 presents the breakdown of marks for the Project.
-
-Table 2 Breakdown of marks	
-Application 	12%
-Project Report	2%
-In-class Test	6%
-
