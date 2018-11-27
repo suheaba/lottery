@@ -1,94 +1,138 @@
+/*
+Lottery.java
+Suheab Abass
+22 Nov 2018
+*/
+
 import java.util.*;
 import javax.swing.*;
- 
-public class main {
- 
-List<Integer> secretNumbers = new ArrayList<Integer>();
- 
-  public static void main(String[] args) {
- 
-String numOfLines;
-  int num = 0;
-  int _counter = 0;
- 
-  numOfLines = JOptionPane.showInputDialog(null, "How many lines would you like to paly?");
-  num = Integer.valueOf(numOfLines);
- 
-  while (num > 3) {
-  numOfLines = JOptionPane.showInputDialog(null,
-  "the max num of tries is 3 , how many lines would you like to paly?");
-  num = Integer.valueOf(numOfLines);
- 
-    }
- 
-    while (_counter <= num) {
-    _counter++;
-    processPlayerQuess(num);
- 
-   if (_counter == num) {
-   // get the results of the game.
- 
-   if (JOptionPane.showConfirmDialog(null, " do you want to continue playing?", "Info",
-   JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-   _counter = 0;
-        }
- 
-      }
- 
-    }
- 
+
+public class Lottery{
+
+List<Integer> secretNumbers=new ArrayList<Integer>();
+
+  public static void main(String[] args){
+
+	  String numOfLines;
+	  int num=0;
+
+	  numOfLines=JOptionPane.showInputDialog(null, "How many lines would you like to play?");
+	  num=Integer.valueOf(numOfLines);
+
+	  while (num>3){
+	  numOfLines=JOptionPane.showInputDialog(null,
+	  "The max number of attempts is 3. How many lines would you like to play?");
+	  num=Integer.valueOf(numOfLines);
+	  }
+	  processPlayerGuess(num);
+
+	  while (JOptionPane.showConfirmDialog(null, " Do you want to continue playing?", "Info", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION){
+		   numOfLines=JOptionPane.showInputDialog(null, "How many lines would you like to paly?");
+		   num = Integer.valueOf(numOfLines);
+		   
+		   while (num>3){
+			   numOfLines=JOptionPane.showInputDialog(null,
+			   "The max number of attempts is 3. How many lines would you like to play?");
+			   num=Integer.valueOf(numOfLines);
+		   }
+		   System.out.println("\n!!!You are playing again!!!");
+		   processPlayerGuess(num);
+
+	   }
+	   System.exit(0);
+
   }
- 
-    public static void processPlayerQuess(int numberOfAttemp) {
- 
-      List<String> PlayerNumberList = new ArrayList<String>();
-      List<String> RandomNumberList = new ArrayList<String>();
-      Collection<String> PlayerNumberMatched = new HashSet<String>();
-      Collection<String> different = new HashSet<String>();
-      StringBuilder result = new StringBuilder();
-      int _counter = 1;
-      int amount = 0;
- 
-      while (_counter <= numberOfAttemp) {
- 
-      String playerNumbers = JOptionPane.showInputDialog(null,
-      "Please enter a number between 0 and 40 and use comma after each number please");
- 
-      PlayerNumberList = Arrays.asList(playerNumbers.split(","));
-      System.out.println(PlayerNumberList);
- 
-      RandomNumberList = getRandomNumberString();
-      System.out.println(RandomNumberList);
- 
-     // compare the playerNumbers with gueesedNumber using collection
-       PlayerNumberMatched.addAll(PlayerNumberList);
-      different.addAll(PlayerNumberList);
-      different.addAll(RandomNumberList);
- 
-      PlayerNumberMatched.retainAll(RandomNumberList);
-      amount = PlayerNumberMatched.size() * 100;
- 
-      _counter++;
-      result.append("\nAttemp Number : " + String.valueOf(_counter) + "\nYour Numbers : " + PlayerNumberList + "\nThe Random Number is : " + RandomNumberList + "\nGuessed Numbers matched :"+ PlayerNumberMatched + "\nAmount won : € " + amount);
- 
-    }
- 
-    System.out.println(result.toString());
+
+    public static void processPlayerGuess(int numberOfAttemp) {
+
+    	//inputted numbers
+    	int PlayerNumber[] = new int[6];
+    	//stores how many numbers are guessed correctly for each play. Max 3 plays.
+    	int GuessedNumberCounter[]={0,0,0,0};
+    	//Another counter to store guessed numbers
+    	int counter2=0;
+    	int RandomNumbers[]= new int[6];
+    	int PlayerNumberMatched[]= new int[6];
+
+    	StringBuilder result = new StringBuilder();
+    	int _counter = 1;
+		int amount = 0;
+		boolean wonTheLottery=false;
+		 //random numbers to guess
+	    RandomNumbers = getRandomNumbers();
+	    result.append("Random Numbers : " +Arrays.toString(RandomNumbers)+"\n\n");
+		while (_counter<=numberOfAttemp){
+
+			String playerNumbers=JOptionPane.showInputDialog(null,
+					"Please enter a number between 0 and 40 and use comma after each number please");
+
+	      //numbers guessed
+	      String[] temp=playerNumbers.split(",");
+	      for(int i=0; i<temp.length; i++){
+	    	  PlayerNumber[i]=Integer.parseInt(temp[i]);
+	    	}
+
+	      // compare the playerNumbers with gueessedNumber
+	      for(int i=0; i<6; i++){
+	    	  for(int j=0; j<6; j++){
+	    		  if(PlayerNumber[i]==RandomNumbers[j]){
+	    			  GuessedNumberCounter[_counter]++;
+	    			  PlayerNumberMatched[counter2]=PlayerNumber[i];
+	    			  counter2++;
+    		  	}
+	    	  }
+	      }
+
+	      if(GuessedNumberCounter[_counter]==3)
+	    	  amount=100;
+	      else if(GuessedNumberCounter[_counter]==4)
+	    	  amount=250;
+	      else if(GuessedNumberCounter[_counter]==5)
+	    	  amount=1000;
+	      else if(GuessedNumberCounter[_counter]==6)
+	    	  wonTheLottery=true;
+
+	      result.append("\nAttemp Number : "+String.valueOf(_counter)+
+	    		  "\nYour Numbers : "+Arrays.toString(PlayerNumber));
+
+	      if(GuessedNumberCounter[_counter]==0)
+	    	  result.append("\nYou didn't guess any number correctly");
+	      else {
+	    	  result.append("\nGuessed Numbers matched :");
+	    	  for(int i=0;i<counter2;i++)
+	    		  result.append(PlayerNumberMatched[i]+" ");
+	      }
+	      if(wonTheLottery==true)
+	    	  result.append("\nCONGRUTALTIONS... YOU WON THE LOTTERY\n");
+	      else
+	    	  result.append("\nAmount won : € "+amount+"\n");
+
+	      _counter++;
+	      counter2=0;
+
+		}
+		result.append("\n");
+      for(int i=1;i<=numberOfAttemp;i++)
+    	  result.append("You guessed "+GuessedNumberCounter[i]+" numbers on line "+i+"\n");
+
+    	  JOptionPane.showMessageDialog(null,result.toString());
+
   }
- 
-      public static List<String> getRandomNumberString() {
-      // It will generate 6 digit random Number.
-      // from 0 to 40
- 
-      List<String> secretNumberList = new ArrayList<String>();
- 
-      for (int i = 0; i < 6; i++) {
-      secretNumberList.add(getRandomNumber());
-      }
-    return secretNumberList;
+
+      public static int[] getRandomNumbers(){
+	      // It will generate 6 digit random Number.
+	      // from 0 to 40
+
+	      int secretNumberList[]=new int[6];
+
+	      for(int i=0; i<6; i++) {
+	    	  secretNumberList[i]=getRandomNumber();
+	      }
+	      return secretNumberList;
   }
- 
-  public static String getRandomNumber() {
-      Random rnd = new Random();
-      return String.valueOf(rnd.nextInt(40));
-      }
+
+	  public static int getRandomNumber(){
+	      Random rnd=new Random();
+	      return rnd.nextInt(40);
+	   }
+}
